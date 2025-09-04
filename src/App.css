@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+summary::-webkit-details-marker {
+  display: none
+}
+
+@keyframes flyToTarget {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+  100% {
+    transform: translateX(150px) scale(1.2);
+    opacity: 0;
+    filter: brightness(1.5);
+  }
+}
+
+/* Banner Container */
+.top-banner {
+  width: 100%;
+  padding: 5px 0;
+  background: linear-gradient(90deg, #3D1F94, #F9A826, #00C2A8);
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 999;
+}
+
+/* Marquee Animation */
+.marquee > * {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 20s linear infinite;
+  padding-left: 50%;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@theme {
+  --animate-navBar: navBar 0.7s ease-out 0s 1;
+  @keyframes navBar {
+    0% {
+      transform: translateY(-120px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+}
+
+.fly-animation {
+  animation: flyToTarget 2s ease-in-out forwards infinite;
+}
+
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/HelveticaNeueLight.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/HelveticaNeueMedium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/HelveticaNeueBold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@theme {
+  --font-helvetica: "Helvetica", system-ui, sans-serif;
+
+  /* Heroship Color Palette */
+  --color-primary: #3D1F94;       /* Deep Indigo – bold and creative */
+  --color-secondary: #F9A826;     /* Warm Amber – energetic and inviting */
+  --color-accent: #00C2A8;        /* Aqua Mint – fresh and modern */
+  --color-muted: #E5E7EB;         /* Soft Gray – clean background */
+  --color-dark: #1F2937;          /* Charcoal – for text and contrast */
+}
+
+.video-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@layer base {
+  body {
+    @apply font-helvetica font-normal;
+    background-color: var(--color-muted);
+    color: var(--color-dark);
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
