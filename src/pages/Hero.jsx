@@ -31,6 +31,8 @@ const Hero = () => {
   const [colorsCount, setColorsCount] = useState(0);
   const [iconsCount, setIconsCount] = useState(0);
   const [selectedIcons, setSelectedIcons] = useState([]);
+  const [buttons, setButtons] = useState([]);
+  const [buttonsBB, setButtonsBB] = useState([]);
   const [buttonsCount, setButtonsCount] = useState(0);
 
   const iconOptions = [
@@ -82,6 +84,26 @@ const Hero = () => {
       icons: updated,
     }));
   };
+
+  const handleButtonChange = (index, value) => {
+    const updatedB = [...buttons];
+    updatedB[index] = value;
+    setButtons(updatedB);
+    setForm((prevForm) => ({
+      ...prevForm,
+      buttonColors: updatedB
+    }));
+  }
+
+  const handleButtonBgChange = (index, value) => {
+    const updatedBB = [...buttonsBB];
+    updatedBB[index] = value;
+    setButtonsBB(updatedBB);
+    setForm((prevForm) => ({
+      ...prevForm,
+      buttonBgColors: updatedBB
+    }));
+  }
   const getAvailableOptions = (currentIndex) => {
     return iconOptions.filter((opt) =>
       selectedIcons[currentIndex] === opt.label || !selectedIcons.includes(opt.label)
@@ -137,9 +159,10 @@ const Hero = () => {
     heroTextColor: "",
     heroDescription: "",
     buttons: [],
-    buttonColors: ["", ""],
-    button2Color: "",
+    buttonColors: [],
+    buttonBgColors: []
 	});
+  console.log(form)
 
   const muted = form.colors[0] == "" || form.colors[0] == undefined || form.colors[0] == null ? "#E5E7EB" :  form.colors[0]
   const dark = form.colors[1] == "" || form.colors[1] == undefined || form.colors[1] == null ? "#1F2937" : form.colors[1]
@@ -196,7 +219,7 @@ const Hero = () => {
   const labelStyle = "flex text-primary items-center gap-3 hover:text-secondary transition"
   const subInputStyle = "pl-1 p-1 w-full rounded-sm mb-3 border-primary border-2"
   const inputStyle = "pl-1 p-1.5 w-full outline-none rounded-sm mb-3 border-primary border-2"
-  const subSectionStyle = "flex text-dark items-center"
+  const subSectionStyle = "flex text-dark items-center -mb-[0.5px]"
 
   return(
     <>
@@ -451,7 +474,16 @@ const Hero = () => {
                           value={form.buttons[index] || ""}
                           onChange={(e) => handleArrayChange("buttons", index, e.target.value)}
                         />
-                        <Color palette={palette} colors={colors} value={form.buttonColors[index]} onChange={(e) => handleArrayChange(`buttonColor-${index+1}`, index, e.target.value)} name={`buttonColor-${index+1}`} id={`buttonColor-${index+1}`}/>
+                        <label className={subSectionStyle} htmlFor={`buttonColor-${index+1}`}>
+                          Text
+                        </label>
+                        <Color palette={palette} colors={colors} value={buttons[index] || ""}
+                        onChange={(e) => handleButtonChange(index, e.target.value)} name={`buttonColor-${index+1}`} id={`buttonColor-${index+1}`}/>
+                        <label className={subSectionStyle} htmlFor={`buttonBgColor-${index+1}`}>
+                          Background
+                        </label>
+                        <Color palette={palette} colors={colors} value={buttonsBB[index] || ""}
+                        onChange={(e) => handleButtonBgChange(index, e.target.value)} name={`buttonBgColor-${index+1}`} id={`buttonBgColor-${index+1}`}/>
                       </>
                     ))}
                   </form>
