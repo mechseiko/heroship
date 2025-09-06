@@ -1,5 +1,5 @@
 import React from 'react';
-import {logo} from '../assets/links';
+import logo from '../assets/logo.png'
 
 const Alert = ({message, closeAlertBox}) => {
   return (

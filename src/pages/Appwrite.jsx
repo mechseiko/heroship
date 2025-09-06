@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import "../App.css";
 import { client } from "../lib/appwrite";
 import { AppwriteException } from "appwrite";
-import {logo} from "../assets/links";
+import logo from '../assets/logo.png'
 import AppwriteSvg from "../../public/Appwrite.svg"
 import Header from "../components/Header";
 import Container from "../components/Container";

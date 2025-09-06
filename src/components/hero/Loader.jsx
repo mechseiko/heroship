@@ -1,5 +1,5 @@
-import { logo } from '../../assets/links';
-import AppwriteSvg from '../../../public/Appwrite.svg';
+import logo from '../../assets/logo.png'
+import AppwriteSvg from '../../Appwrite.svg';
 
 const Loader = () => {
   return (

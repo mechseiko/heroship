@@ -1,0 +1,21 @@
+{
+  "name": "Heroship",
+  "short_name": "Heroship",
+  "description": "Everything you need to build stunning hero sections.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1F2937",
+  "theme_color": "#3D1F94",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
