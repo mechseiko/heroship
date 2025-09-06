@@ -154,7 +154,6 @@ const Hero = () => {
     layout: "",
     heroImage: File,
     heroBg : "",
-    heroImageSize: "",
     heroText: "",
     heroTextColor: "",
     heroDescription: "",
@@ -529,10 +528,10 @@ const Hero = () => {
 {/* PREVIEW */}
             {alert && <Alert message={"Start Editing😉"} closeAlertBox={closeAlert}/>}
             <Container>
-              <main style={{backgroundColor: muted}}>
+              <main style={{backgroundColor: form.heroBg}}>
                 {/* GENERATED DESKTOP NAV */}
                 <header
-                  style={{ backgroundColor: dark,}}
+                  style={{ backgroundColor: form.headerBg,}}
                   className="hidden w-full md:flex flex-row justify-between items-center px-3 py-1"
                 >
                   {form.titlePosition === "left" || form.titlePosition == "" ? (
@@ -547,7 +546,7 @@ const Hero = () => {
                           alt="Logo"
                         />
                       )}
-                      <h1 style={{ color: secondary }} className='font-semibold leading-tight text-3xl'>
+                      <h1 style={{ color: form.titleColor }} className='font-semibold leading-tight text-3xl'>
                         {form.title}
                       </h1>
                     </Link>
@@ -565,12 +564,12 @@ const Hero = () => {
                         )}
                       </Link>
                   )}
-                  {form.titlePosition === "center" && <h1 style={{ color: secondary }} className='font-semibold leading-tight text-3xl'>{form.title}</h1>}
+                  {form.titlePosition === "center" && <h1 style={{ color: form.titleColor }} className='font-semibold leading-tight text-3xl'>{form.title}</h1>}
 
-                  <div style={{ color: 'white' }} className='flex justify-center gap-5'>
+                  <div className='flex justify-center gap-5'>
                     <nav className="flex justify-center gap-x-[1px] text-md">
                       {form.navbar.map((link) => (
-                        <Link style={{ color: secondary }} className='hover:overline' key={link} to={link}>
+                        <Link style={{ color: form.navbarColor }} className='hover:overline' key={link} to={link}>
                           {link}
                         </Link>
                       ))}
@@ -581,7 +580,7 @@ const Hero = () => {
                       if (!iconData) return null;
                       const IconComponent = iconData.icon;
                       return (
-                        <div key={`icon-${idx}`} className="text-center">
+                        <div style={{ color: form.iconsColor }}  key={`icon-${idx}`} className="text-center">
                           <IconComponent size={32} />
                         </div>
                       );
@@ -591,7 +590,7 @@ const Hero = () => {
 
                 {/* GENERATED MOBILE NAV */}
                 <header
-                  style={{ backgroundColor: dark, color: 'white' }}
+                  style={{ backgroundColor: form.headerBg }}
                   className="md:hidden xl:hidden 2xl:hidden flex flex-col justify-center px-3 py-1"
                 >
                   <div className='flex justify-between text-center items-center'>
@@ -606,11 +605,11 @@ const Hero = () => {
                           alt="Logo"
                         />
                       )}
-                      <h1 style={{ color: secondary }} className='font-semibold leading-tight text-3xl'>
+                      <h1 style={{ color: form.titleColor }} className='font-semibold leading-tight text-3xl'>
                         {form.title}
                       </h1>
                     </Link>
-                    <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+                    <button className="md:hidden" style={{ color: form.navbarColor }} onClick={() => setIsOpen(!isOpen)}>
                       {isOpen ? <lucid.X size={28} /> : <lucid.Menu size={28} />}
                     </button>
                   </div>
@@ -618,20 +617,20 @@ const Hero = () => {
                     <ul className="gap-5 text-center flex flex-col items-center">
                       <hr />
                       {form.navbar.map((link) => (
-                        <Link style={{ color: secondary }} key={link} to={link}>
+                        <Link style={{ color: form.navbarColor }} key={link} to={link}>
                           {link}
                         </Link>
                       ))}
                       <hr />
                       <div className={`flex flex-col justify-center items-center gap-3 mb-2`}>
                         <button
-                          style={{ backgroundColor: primary, color: muted  }}
+                          style={{ backgroundColor: form.buttonBgColors[0], color: form.buttonColors[0] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[0]}
                         </button>
                         <button
-                          style={{ backgroundColor: secondary, color: dark }}
+                          style={{ backgroundColor: form.buttonBgColors[1], color: form.buttonColors[1] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[1]}
@@ -643,12 +642,11 @@ const Hero = () => {
 
                 <div className='flex justify-center max-w-5xl mx-auto break-words'>
                   <section
-                    style={{ color: dark }}
                     className={`${form.layout === "left" ? "w-[65%]" : "w-full justify-center items-center text-center"} relative`}
                   >
                     <div className={`${form.layout === "left" ? "" : "mx-auto"} mb-3`}>
                       <h1
-                        style={{ color: dark }}
+                        style={{ color: form.heroTextColor}}
                         className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
                       >
                         {form.heroText}
@@ -659,13 +657,13 @@ const Hero = () => {
 
                       <div className={`flex flex-row justify-center items-center gap-3`}>
                         <button
-                          style={{ backgroundColor: primary, color: 'white' }}
+                          style={{ backgroundColor: form.buttonBgColors[0], color: form.buttonColors[0] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[0]}
                         </button>
                         <button
-                          style={{ backgroundColor: secondary, color: dark }}
+                          style={{ backgroundColor: form.buttonBgColors[1], color: form.buttonColors[1] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[1]}
