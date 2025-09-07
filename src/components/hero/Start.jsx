@@ -1,7 +1,7 @@
 import SectionHeader from '../SectionHeader';
 import Container from '../Container';
 import Cta from './Cta';
-import mobile from '../../assets/mobile.png';
+import mobile from '../../assets/mobile.webm';
 
 function Start(props) {
   return (
@@ -28,11 +28,21 @@ function Start(props) {
             </div>
 
             <div className='md:w-1/2 w-full flex justify-center'>
-              <img
+              {/* <img
                 src={mobile}
                 alt="Mobile app preview"
                 className='w-[250px] md:w-[300px] lg:w-[350px] object-contain'
-              />
+              /> */}
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className='rounded-[14%] w-[250px] md:w-[300px] lg:w-[350px] object-contain'
+            >
+                <source src={mobile} type="video/webm" />
+                Your browser does not support the video tag.
+            </video>
             </div>
           </section>
         </Container>

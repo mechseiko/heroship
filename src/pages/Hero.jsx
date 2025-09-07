@@ -8,6 +8,7 @@ import Logo from '../components/Logo';
 import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
 import Color from '../components/Color';
+import Export from './Export';
 
 
 
@@ -24,6 +25,7 @@ const getHours = () => {
 }
 
 const Hero = () => {
+  const [showExport, setShowExport] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [alert, setAlert] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -163,13 +165,13 @@ const Hero = () => {
 	});
   console.log(form)
 
-  const muted = form.colors[0] == "" || form.colors[0] == undefined || form.colors[0] == null ? "#E5E7EB" :  form.colors[0]
-  const dark = form.colors[1] == "" || form.colors[1] == undefined || form.colors[1] == null ? "#1F2937" : form.colors[1]
-  const primary = form.colors[2] == "" || form.colors[2] == undefined || form.colors[2] == null ? "#3D1F94" : form.colors[2]
-  const secondary = form.colors[3] == "" || form.colors[3] == undefined || form.colors[3] == null ? "#F9A826" : form.colors[3]
-  const accent = form.colors[4] == "" || form.colors[4] == undefined || form.colors[4] == null ? "#00C2A8" : form.colors[4]
+  const light = form.colors[0] == "" || form.colors[0] == undefined || form.colors[0] == null ? "" :  form.colors[0]
+  const dark = form.colors[1] == "" || form.colors[1] == undefined || form.colors[1] == null ? "" : form.colors[1]
+  const primary = form.colors[2] == "" || form.colors[2] == undefined || form.colors[2] == null ? "" : form.colors[2]
+  const secondary = form.colors[3] == "" || form.colors[3] == undefined || form.colors[3] == null ? "" : form.colors[3]
+  const accent = form.colors[4] == "" || form.colors[4] == undefined || form.colors[4] == null ? "" : form.colors[4]
 
-  const colors = [muted, dark, primary, secondary, accent];
+  const colors = [{"Light": light}, {"Dark": dark}, {"Primary": primary}, {"Secondary": secondary}, {"Accent": accent}];
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -208,9 +210,7 @@ const Hero = () => {
   };
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
-    alert(form.colors)
-		console.log("Form :", form);
+		setShowExport(true);
 	};
   
   const headerStyle = "font-bold text-xl text-dark md:mb-3 mb-5"
@@ -226,7 +226,7 @@ const Hero = () => {
         <section className="bg-muted min-h-[80vh]">
 
         {/* HEADER */}
-        <header className={`bg-muted flex-row shadow-md justify-between items-center md:px-15 px-3 py-2 sticky top-0 left-0 z-9990 text-dark flex ${sidebarOpen ? "blur-sm" : ""}`} onClick={() => sidebarOpen && setSidebarOpen(false)}>
+        <header className={`bg-muted flex-row shadow-md justify-between items-center md:px-15 px-3 py-2 sticky top-0 z-9992 text-dark flex ${sidebarOpen ? "blur-sm" : ""}`} onClick={() => sidebarOpen && setSidebarOpen(false)}>
           <div>
             <h1 className='text-semibold md:text-2xl text-lg'>{getHours()}, <span className='text-secondary'>Abdulqoyum</span></h1>
           </div>
@@ -314,15 +314,10 @@ const Hero = () => {
                       Logo Size
                     </label>
                     <input placeholder='Logo size' type="number" name="logoSize" onChange={handleInputChange} value={form.logoSize} className={inputStyle}/>
-                  </form>
-
-                  {/* LOGO STYLE */}
-                  <form className={formStyle}>
-                    <label className={labelStyle} htmlFor="logoStyle">
+                    <label htmlFor="logoStyle">
                       Logo Style
-                    </label>
-                    <select value={form.logoStyle} className={inputStyle} onChange={handleInputChange} name="logoStyle" id="logoStyle">
-                      <option value="">---</option>
+                    </label> <br />
+                    <select className='border-1 rounded-sm border-dark' value={form.logoStyle} onChange={handleInputChange} name="logoStyle" id="logoStyle">
                       <option value="normal">Normal</option>
                       <option value="rounded">Rounded</option>
                     </select>
@@ -345,7 +340,6 @@ const Hero = () => {
                       Title Position
                     </label>
                     <select value={form.titlePosition} className={inputStyle} onChange={handleInputChange} name="titlePosition" id="titlePosition">
-                      <option value="">---</option>
                       <option value="left">Left</option>
                       <option value="center">Center</option>
                     </select>
@@ -409,9 +403,8 @@ const Hero = () => {
                       Hero Layout
                     </label>
                     <select value={form.layout} className={inputStyle} onChange={handleInputChange} name="layout" id="layout">
-                      <option value="">---</option>
-                      <option value="left">Left</option>
                       <option value="center">Center</option>
+                      <option value="left">Left</option>
                     </select>
                   </form>
 
@@ -526,12 +519,13 @@ const Hero = () => {
 
 
 {/* PREVIEW */}
+            {showExport && <Export />}
             {alert && <Alert message={"Start Editing😉"} closeAlertBox={closeAlert}/>}
             <Container>
-              <main style={{backgroundColor: form.heroBg}}>
+              <main style={{backgroundColor: colors.find(color => Object.keys(color)[0] === form.heroBg)?.[form.heroBg]}}>
                 {/* GENERATED DESKTOP NAV */}
                 <header
-                  style={{ backgroundColor: form.headerBg,}}
+                  style={{ backgroundColor: colors.find(color => Object.keys(color)[0] === form.headerBg)?.[form.headerBg],}}
                   className="hidden w-full md:flex flex-row justify-between items-center px-3 py-1"
                 >
                   {form.titlePosition === "left" || form.titlePosition == "" ? (
@@ -544,9 +538,10 @@ const Hero = () => {
                             height: `${form.logoSize}px`,
                           }}
                           alt="Logo"
+                          className={`${form.logoStyle === "rounded" ? "rounded-full" : "rounded-0"}`}
                         />
                       )}
-                      <h1 style={{ color: form.titleColor }} className='font-semibold leading-tight text-3xl'>
+                      <h1 style={{ color: colors.find(color => Object.keys(color)[0] === form.titleColor)?.[form.titleColor] }} className='font-semibold leading-tight text-3xl'>
                         {form.title}
                       </h1>
                     </Link>
@@ -560,16 +555,17 @@ const Hero = () => {
                               height: `${form.logoSize}px`,
                             }}
                             alt="Logo"
+                            className={`${form.logoStyle === "rounded" ? "rounded-full" : "rounded-0"}`}
                           />
                         )}
                       </Link>
                   )}
-                  {form.titlePosition === "center" && <h1 style={{ color: form.titleColor }} className='font-semibold leading-tight text-3xl'>{form.title}</h1>}
+                  {form.titlePosition === "center" && <h1 style={{ color: colors.find(color => Object.keys(color)[0] === form.titleColor)?.[form.titleColor] }} className='font-semibold leading-tight text-3xl'>{form.title}</h1>}
 
-                  <div className='flex justify-center gap-5'>
-                    <nav className="flex justify-center gap-x-[1px] text-md">
+                  <div className='flex justify-center gap-5 items-center'>
+                    <nav className="flex justify-center gap-x-5 text-md">
                       {form.navbar.map((link) => (
-                        <Link style={{ color: form.navbarColor }} className='hover:overline' key={link} to={link}>
+                        <Link style={{ color: colors.find(color => Object.keys(color)[0] === form.navbarColor)?.[form.navbarColor] }} key={link} to={link}>
                           {link}
                         </Link>
                       ))}
@@ -580,7 +576,7 @@ const Hero = () => {
                       if (!iconData) return null;
                       const IconComponent = iconData.icon;
                       return (
-                        <div style={{ color: form.iconsColor }}  key={`icon-${idx}`} className="text-center">
+                        <div style={{ color: colors.find(color => Object.keys(color)[0] === form.iconsColor)?.[form.iconsColor] }}  key={`icon-${idx}`} className="text-center">
                           <IconComponent size={32} />
                         </div>
                       );
@@ -590,8 +586,8 @@ const Hero = () => {
 
                 {/* GENERATED MOBILE NAV */}
                 <header
-                  style={{ backgroundColor: form.headerBg }}
-                  className="md:hidden xl:hidden 2xl:hidden flex flex-col justify-center px-3 py-1"
+                  style={{ backgroundColor: colors.find(color => Object.keys(color)[0] === form.headerBg)?.[form.headerBg] }}
+                  className="rounded-t-2xl md:hidden xl:hidden 2xl:hidden flex flex-col justify-center px-3 py-1"
                 >
                   <div className='flex justify-between text-center items-center'>
                     <Link to="/" className='flex text-center'>
@@ -603,13 +599,14 @@ const Hero = () => {
                             height: `${form.logoSize}px`,
                           }}
                           alt="Logo"
+                          className={`${form.logoStyle === "rounded" ? "rounded-full" : "rounded-0"}`}
                         />
                       )}
-                      <h1 style={{ color: form.titleColor }} className='font-semibold leading-tight text-3xl'>
+                      <h1 style={{ color: colors.find(color => Object.keys(color)[0] === form.titleColor)?.[form.titleColor] }} className='font-semibold leading-tight text-3xl'>
                         {form.title}
                       </h1>
                     </Link>
-                    <button className="md:hidden" style={{ color: form.navbarColor }} onClick={() => setIsOpen(!isOpen)}>
+                    <button className="md:hidden" style={{ color: colors.find(color => Object.keys(color)[0] === form.navbarColor)?.[form.navbarColor] }} onClick={() => setIsOpen(!isOpen)}>
                       {isOpen ? <lucid.X size={28} /> : <lucid.Menu size={28} />}
                     </button>
                   </div>
@@ -617,20 +614,20 @@ const Hero = () => {
                     <ul className="gap-5 text-center flex flex-col items-center">
                       <hr />
                       {form.navbar.map((link) => (
-                        <Link style={{ color: form.navbarColor }} key={link} to={link}>
+                        <Link style={{ color: colors.find(color => Object.keys(color)[0] === form.navbarColor)?.[form.navbarColor] }} key={link} to={link}>
                           {link}
                         </Link>
                       ))}
                       <hr />
                       <div className={`flex flex-col justify-center items-center gap-3 mb-2`}>
                         <button
-                          style={{ backgroundColor: form.buttonBgColors[0], color: form.buttonColors[0] }}
+                          style={{ backgroundColor: colors.find(color => Object.keys(color)[0] === form.buttonBgColors[0])?.[form.buttonBgColors[0]], color: colors.find(color => Object.keys(color)[0] === form.buttonColors[0])?.[form.buttonColors[0]] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[0]}
                         </button>
                         <button
-                          style={{ backgroundColor: form.buttonBgColors[1], color: form.buttonColors[1] }}
+                          style={{ backgroundColor: colors.find(color => Object.keys(color)[0] === form.buttonBgColors[1])?.[form.buttonBgColors[1]], color: colors.find(color => Object.keys(color)[0] === form.buttonColors[1])?.[form.buttonColors[1]] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[1]}
@@ -646,24 +643,26 @@ const Hero = () => {
                   >
                     <div className={`${form.layout === "left" ? "" : "mx-auto"} mb-3`}>
                       <h1
-                        style={{ color: form.heroTextColor}}
+                        style={{ color: colors.find(color => Object.keys(color)[0] === form.heroTextColor)?.[form.heroTextColor]}}
                         className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
                       >
                         {form.heroText}
                       </h1>
-                      <p className="text-base sm:text-lg lg:text-xl opacity-80 mb-10 max-w-xl mx-auto">
+                      <p className="text-base sm:text-lg lg:text-xl opacity-80 mb-10 max-w-xl mx-auto"
+                        style={{ color: colors.find(color => Object.keys(color)[0] === form.heroTextColor)?.[form.heroTextColor]}}
+                      >
                         {form.heroDescription}
                       </p>
 
                       <div className={`flex flex-row justify-center items-center gap-3`}>
                         <button
-                          style={{ backgroundColor: form.buttonBgColors[0], color: form.buttonColors[0] }}
+                          style={{ backgroundColor: colors.find(color => Object.keys(color)[0] === form.buttonBgColors[0])?.[form.buttonBgColors[0]], color: colors.find(color => Object.keys(color)[0] === form.buttonColors[0])?.[form.buttonColors[0]] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[0]}
                         </button>
                         <button
-                          style={{ backgroundColor: form.buttonBgColors[1], color: form.buttonColors[1] }}
+                          style={{ backgroundColor: colors.find(color => Object.keys(color)[0] === form.buttonBgColors[1])?.[form.buttonBgColors[1]], color: colors.find(color => Object.keys(color)[0] === form.buttonColors[1])?.[form.buttonColors[1]] }}
                           className='md:px-6 md:py-3 p-2 rounded font-medium'
                         >
                           {form.buttons[1]}
