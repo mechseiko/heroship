@@ -8,7 +8,7 @@ const Button = ({
   to,
   lucid
 }) => {
-  const base = "md:px-6 md:py-3 p-2 rounded font-medium transition duration-300";
+  const base = "cursor-pointer md:px-6 md:py-3 p-2 rounded font-medium transition duration-300";
   const variants = {
     primary: "bg-primary text-white hover:bg-indigo-800 hover:scale-105 hover:shadow-lg",
     secondary: "bg-secondary text-dark hover:bg-yellow-500 hover:text-muted hover:scale-105 hover:shadow-lg",

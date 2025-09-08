@@ -2,8 +2,10 @@ import SectionHeader from '../SectionHeader';
 import Container from '../Container';
 import Cta from './Cta';
 import mobile from '../../assets/mobile.webm';
+// import mobilePicture from '../../assets/mobile-picture.png';
 
-function Start(props) {
+const Start = () => {
+
   return (
     <div>
       <section className='bg-muted'>
@@ -17,8 +19,7 @@ function Start(props) {
               />
               
               <ul className="list-disc pl-5 mt-4 space-y-2 text-md">
-                <li>Create your free account</li>
-                <li>Edit your hero sction</li>
+                <li>Edit your hero section</li>
                 <li>Export and publish</li>
               </ul>
 
@@ -29,11 +30,11 @@ function Start(props) {
 
             <div className='md:w-1/2 w-full flex justify-center'>
               {/* <img
-                src={mobile}
+                src={mobilePicture}
                 alt="Mobile app preview"
                 className='w-[250px] md:w-[300px] lg:w-[350px] object-contain'
               /> */}
-              <video
+            <video
                 autoPlay
                 muted
                 loop

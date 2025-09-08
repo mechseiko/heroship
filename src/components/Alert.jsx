@@ -13,7 +13,7 @@ const Alert = ({message, closeAlertBox}) => {
         <p className="text-2xl text-muted mb-5">{message}</p>
         <button
           onClick={closeAlertBox}
-          className="bg-primary text-muted px-5 py-2 rounded font-semibold text-[15px] transition"
+          className="cursor-pointer bg-primary text-muted px-5 py-2 rounded font-semibold text-[15px] transition"
         >
           Ok
         </button>

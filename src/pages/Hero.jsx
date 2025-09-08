@@ -209,8 +209,15 @@ const Hero = () => {
   }));
   };
 
-	const handleSubmit = (e) => {
+
+  const openSideBar = () => {
+    setSidebarOpen(true);
+    setShowExport(false);
+  }
+
+	const handleExport = () => {
 		setShowExport(true);
+    setSidebarOpen(false);
 	};
   
   const headerStyle = "font-bold text-xl text-dark md:mb-3 mb-5"
@@ -226,15 +233,14 @@ const Hero = () => {
         <section className="bg-muted min-h-[80vh]">
 
         {/* HEADER */}
-        <header className={`bg-muted flex-row shadow-md justify-between items-center md:px-15 px-3 py-2 sticky top-0 z-9992 text-dark flex ${sidebarOpen ? "blur-sm" : ""}`} onClick={() => sidebarOpen && setSidebarOpen(false)}>
+        <header className={`bg-muted flex-row shadow-md justify-between items-center md:px-15 px-3 py-3 sticky top-0 z-9992 text-dark flex `} onClick={() => sidebarOpen && setSidebarOpen(false)}>
           <div>
-            <h1 className='text-semibold md:text-2xl text-lg'>{getHours()}, <span className='text-secondary'>Abdulqoyum</span></h1>
+            <h1 className='text-semibold md:text-2xl text-lg'>{getHours()}</h1>
           </div>
           <input type="text" autoFocus className='visible-none outline-none size-0 max-h-0 h-0' readOnly />
           <div className='flex justify-around md:gap-5 gap-2 items-center'>
-            <span title="Profile"><img className='rounded-full size-10 border-1 border-secondary' src="https://xsgames.co/randomusers/assets/avatars/male/60.jpg" alt="" /></span>
-            <span title="Export" onClick={handleSubmit}><lucid.ExternalLink size={25}/></span>
-            <span title="Edit">{window.innerWidth > 768 ? <lucid.Menu size={25} onClick={() => setSidebarOpen(true)} /> : <lucid.MenuSquare size={25} onClick={() => setSidebarOpen(true)}/>}</span>
+            <span title="Export" className='cursor-pointer' onClick={handleExport}><lucid.ExternalLink size={25}/></span>
+            <span title="Edit"  className='cursor-pointer'>{window.innerWidth > 768 ? <lucid.Menu size={25} onClick={openSideBar} /> : <lucid.MenuSquare size={25} onClick={openSideBar}/>}</span>
           </div>
         </header>
 
@@ -480,21 +486,21 @@ const Hero = () => {
                     ))}
                   </form>
 
-                <button onClick={handleSubmit} className='bg-secondary text-dark hover:bg-yellow-500 hover:text-muted hover:scale-105 hover:shadow-lg md:px-6 md:py-3 p-2 rounded font-medium transition duration-300 text-xl w-full flex flex-row gap-1 justify-center items-center'>
-                      <span>Export</span>
-                      <span><lucid.ExternalLinkIcon /></span>
+                <button onClick={handleExport} className='cursor-pointer bg-secondary text-dark hover:bg-yellow-500 hover:text-muted hover:scale-105 hover:shadow-lg md:px-6 md:py-3 p-2 rounded font-medium transition duration-300 text-xl w-full flex flex-row gap-1 justify-center items-center'>
+                      <span>Ship</span>
+                      <span><lucid.Sailboat /></span>
                 </button>
 
                 <hr className="m-3" />
-                <label className={labelStyle}>
+                {/* <label className={labelStyle}>
                   <lucid.Settings size={20} />
-                  Settings
-                </label>
+                  <span className='cursor-pointer'>Settings</span>
+                </label> */}
 
-                <Link className={labelStyle} to={"/"}>
+                {/* <Link className={labelStyle} to={"/"}>
                   <lucid.LogOut size={20} />
-                  Logout
-                </Link>
+                  <span className='cursor-pointer'>Logout</span>
+                </Link> */}
                 <h3>© Heroship {new Date().getFullYear()}</h3>
                 <p>Developed by <a className='hover:text-primary underline' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
               </main>
@@ -519,7 +525,7 @@ const Hero = () => {
 
 
 {/* PREVIEW */}
-            {showExport && <Export />}
+            {showExport && <Export form={form} colors={colors} onClick={() => setShowExport(false)} labelStyle={labelStyle}/>}
             {alert && <Alert message={"Start Editing😉"} closeAlertBox={closeAlert}/>}
             <Container>
               <main style={{backgroundColor: colors.find(color => Object.keys(color)[0] === form.heroBg)?.[form.heroBg]}}>
@@ -680,7 +686,6 @@ const Hero = () => {
                 </div>
               </main>
             </Container>
-
         </section>
       <Footer />
     </>

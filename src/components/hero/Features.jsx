@@ -51,7 +51,7 @@ const Features = () => {
         },
         {
             feature: "Exportable",
-            description: "Shipping your hero section's source code is as easy as abc",
+            description: "Export your generated hero section code in your preferred programming language.",
             luce: lucid.ExternalLink
         }
     ]

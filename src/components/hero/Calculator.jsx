@@ -51,7 +51,7 @@ const Calculator = () => {
   const yourAppTime = stats[selectedLayout].times.yourApp;
 
   return (
-    <section className="bg-muted text-dark">
+    <section className="bg-muted text-dark opacity-95">
       <Container>
         <SectionHeader
           title="Stay the course, save your time"
@@ -67,6 +67,7 @@ const Calculator = () => {
                 type="number"
                 min="0"
                 max="500"
+                readOnly
                 value={`${customTime}`}
                 onChange={(e) => setCustomTime(Number(e.target.value))}
                 className="no-spinner outline-none text-center text-6xl font-extrabold"

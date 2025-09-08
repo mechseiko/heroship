@@ -7,7 +7,7 @@ import Ship from '../components/hero/Ship';
 import Features from '../components/hero/Features';
 import Start from '../components/hero/Start';
 import Calculator from '../components/hero/Calculator';
-import Join from '../components/hero/Join';
+// import Join from '../components/hero/Join';
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 200);
+    }, 2000);
 
     return () => clearTimeout(loadingTimer);
   }, []);
@@ -32,7 +32,6 @@ const Home = () => {
       <Start />
       <Ship />
       <Calculator />
-      <Join />
       <Footer />
     </>
   );

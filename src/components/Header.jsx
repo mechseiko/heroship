@@ -8,15 +8,13 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/docs", label: "Docs" },
-    { to: "/hero", label: "Hero" },
-    { to: "/support", label: "Support" },
+    { to: "/hero", label: "Build" },
   ];
 
 return(
   <>
     {/* DESKTOP NAV */}
-    <header className="hidden md:flex flex-row justify-between items-center px-3 py-1 border-b-muted border-b-1 opacity-90 sticky top-0 z-9990 text-white bg-dark shadow-md">
+    <header className="*:cursor-pointer hidden md:flex flex-row justify-between items-center px-3 py-1 border-b-muted border-b-1 opacity-90 sticky top-0 z-9990 text-white bg-dark shadow-md">
       <Logo />
       <div className='text-white flex justify-around gap-5 items-center'>
         <nav className="flex gap-5 text-md font-medium ">
@@ -32,11 +30,10 @@ return(
     </header>
 
     {/* MOBILE NAV*/}
-      <header className="md:hidden xl:hidden 2xl:hidden flex flex-col justify-center px-3 py-1 border-b-muted border-b-1 sticky top-0 z-9990 text-white bg-dark shadow-md">
+      <header className="*:cursor-pointer md:hidden xl:hidden 2xl:hidden flex flex-col justify-center px-3 py-1 border-b-muted border-b-1 sticky top-0 z-9990 text-white bg-dark shadow-md">
         <div className='flex justify-between text-center items-center'>
           <Logo />
           <div className='flex gap-x-3'>
-            <lucid.Search />
             <button
               className="md:hidden"
               onClick={() => setIsOpen(!isOpen)}

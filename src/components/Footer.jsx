@@ -20,9 +20,9 @@ const Footer = () => {
       </footer>
 
       <footer className="flex space-x-3 justify-center bg-gray-700 text-center p-1 md:pb-0 pb-5 text-sm text-white">
-        <p>Developed by <a className='hover:overline text-accent' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
+        <p>Developed by <a className='hover:overline text-secondary' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
         <div>-</div>
-        <p>Deployed with <a className='hover:overline text-accent' href="https://appwrite.io" target="_blank" rel="noopener">Appwrite</a></p>
+        <p>Deployed with <a className='hover:overline text-secondary' href="https://appwrite.io" target="_blank" rel="noopener">Appwrite</a></p>
       </footer>
     </>
   );
