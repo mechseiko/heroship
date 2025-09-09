@@ -21,8 +21,7 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
 
   const StackNotFound = () => {
     setshowLinks(true);
-    navigator.clipboard.writeText(languages[lang]["codeString"])
-
+    navigator.clipboard.writeText(languages[0]["codeString"]);
   }
 
   const languages = [
@@ -689,7 +688,7 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
 
         <div className={`space-y-3 mt-3 ${!darkMode ? '*:text-muted' : '*:text-dark'}`}>
           <div className='text-md'>
-              {!showLinks && <h2 className='text-lg underline' onClick={StackNotFound}>Can't find your stack?</h2>}
+              {!showLinks && <h2 className='text-lg underline cursor-pointer' onClick={StackNotFound}>Can't find your stack?</h2>}
               {showLinks && <> 
               <h2 className='text-lg'>Jsx code copied</h2>
               <h2 className='text-lg'>Try one of these:</h2>
@@ -752,7 +751,7 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
 
               <div className={`space-y-3 mt-3 ${!darkMode ? '*:text-muted' : '*:text-dark'}`}>
                 <div className='text-md'>
-                    {!showLinks && <h2 className='text-lg underline' onClick={StackNotFound}>Can't find your stack?</h2>}
+                    {!showLinks && <h2 className='text-lg underline cursor-pointer' onClick={StackNotFound}>Can't find your stack?</h2>}
                     {showLinks && <> 
                     <h2 className='text-lg'>Jsx code copied</h2>
                     <h2 className='text-lg'>Try one of these:</h2>

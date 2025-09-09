@@ -492,33 +492,12 @@ const Hero = () => {
                 </button>
 
                 <hr className="m-3" />
-                {/* <label className={labelStyle}>
-                  <lucid.Settings size={20} />
-                  <span className='cursor-pointer'>Settings</span>
-                </label> */}
-
-                {/* <Link className={labelStyle} to={"/"}>
-                  <lucid.LogOut size={20} />
-                  <span className='cursor-pointer'>Logout</span>
-                </Link> */}
                 <h3>© Heroship {new Date().getFullYear()}</h3>
-                <p>Developed by <a className='hover:text-primary underline' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
+                <p>Developed by <a className='hover:text-secondary underline' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
               </main>
 
             </aside>
           </div>
-
-            
-
-
-
-
-
-
-
-
-
-
 
 
 
