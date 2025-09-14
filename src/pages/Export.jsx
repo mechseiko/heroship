@@ -24,6 +24,43 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
     navigator.clipboard.writeText(languages[0]["codeString"]);
   }
 
+  const Aside = () => {
+    return(
+      <>
+          <div className="flex items-center justify-between mb-5">
+            <Logo />
+            <lucid.X size={24} className="cursor-pointer" onClick={onClick} />
+          </div>
+
+          <div className="space-y-4">
+            {languages.map((language, index) => (
+              <>
+                <div key={index} onClick={() => setLang(index)} className={`gap-x-5 flex items-center cursor-pointer border-2  ${darkMode && lang === index ? "text-muted bg-dark" : !darkMode && lang === index ? "text-dark bg-muted" : darkMode ? " border-dark bg-muted text-dark hover:text-muted hover:bg-dark" : !darkMode ? "border-muted bg-dark text-muted hover:text-dark hover:bg-muted" : ""}  p-2  rounded-xl`}>
+                      <img src={language.src} alt={`${language.language}-logo`} className='size-5'/>
+                      <h2>{language.language}</h2>
+                </div>
+              </>
+            ))}
+          </div>
+
+        <div className={`space-y-3 mt-3 ${!darkMode ? '*:text-muted' : '*:text-dark'}`}>
+          <div className='text-md'>
+              {!showLinks && <h2 className='text-lg underline cursor-pointer' onClick={StackNotFound}>Can't find your stack?</h2>}
+              {showLinks && <> 
+              <h2 className='text-lg'>Jsx code copied</h2>
+              <h2 className='text-lg'>Try one of these:</h2>
+              <a href="https://codingfleet.com/code-converter/react/html-css-js/" target="_blank" className='underline hover:text-secondary'>Coding fleet</a> <br />
+              <a href="https://syntha.ai/converters" target="_blank" className='underline hover:text-secondary'>Syntha.ai</a> <br />
+              <a href="https://www.gitloop.com/tool/react-to-vue?form=MG0AV3" target="_blank" className='underline hover:text-secondary'>Gitloop</a></>}
+          </div>
+              <hr className={`${!darkMode ? '*:text-muted' : '*:text-dark'} m-3`} />
+              <h3>© Heroship {new Date().getFullYear()}</h3>
+              <p>Developed by <a className=' underline hover:text-secondary' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
+        </div>
+      </>
+    )
+  }
+
   const languages = [
     {language: "Reactjs",
         name: "jsx",
@@ -309,68 +346,46 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
       :style="{ backgroundColor: resolveColor(form.headerBg) }"
       class="hidden w-full md:flex flex-row justify-between items-center px-3 py-1"
     >
-      <router-link
-        v-if="form.titlePosition === 'left' || form.titlePosition === ''"
-        to="/"
-        class="flex gap-2"
-      >
-        <img
-          v-if="form.logo"
-          :src="form.logoPreview"
-          :style="{ width: form.logoSize + 'px', height: form.logoSize + 'px' }"
-          :class="form.logoStyle === 'rounded' ? 'rounded-full' : 'rounded-0'"
-          alt="Logo"
-        />
-        <h1
-          :style="{ color: resolveColor(form.titleColor) }"
-          class="font-semibold leading-tight text-3xl"
-        >
+      <template v-if="form.titlePosition === 'left' || form.titlePosition === ''">
+        <router-link to="/" class="flex gap-2">
+          <img
+            v-if="form.logo"
+            :src="form.logoPreview"
+            :style="{ width: form.logoSize + 'px', height: form.logoSize + 'px' }"
+            :alt="'Logo'"
+            :class="form.logoStyle === 'rounded' ? 'rounded-full' : 'rounded-0'"
+          />
+          <h1 :style="{ color: resolveColor(form.titleColor) }" class="font-semibold leading-tight text-3xl">
+            {{ form.title }}
+          </h1>
+        </router-link>
+      </template>
+      <template v-else-if="form.titlePosition === 'center'">
+        <h1 :style="{ color: resolveColor(form.titleColor) }" class="font-semibold leading-tight text-3xl">
           {{ form.title }}
         </h1>
-      </router-link>
-
-      <router-link v-else to="/">
-        <img
-          v-if="form.logo"
-          :src="form.logoPreview"
-          :style="{ width: form.logoSize + 'px', height: form.logoSize + 'px' }"
-          :class="form.logoStyle === 'rounded' ? 'rounded-full' : 'rounded-0'"
-          alt="Logo"
-        />
-      </router-link>
-
-      <h1
-        v-if="form.titlePosition === 'center'"
-        :style="{ color: resolveColor(form.titleColor) }"
-        class="font-semibold leading-tight text-3xl"
-      >
-        {{ form.title }}
-      </h1>
+      </template>
 
       <div class="flex justify-center gap-5 items-center">
         <nav class="flex justify-center gap-x-5 text-md">
           <router-link
-            v-for="(link, index) in form.navbar"
-            :key="index"
+            v-for="link in form.navbar"
+            :key="link"
             :to="link"
             :style="{ color: resolveColor(form.navbarColor) }"
           >
             {{ link }}
           </router-link>
         </nav>
-        <div
-          v-for="(label, idx) in form.icons"
-          :key="'icon-' + idx"
-          :style="{ color: resolveColor(form.iconsColor) }"
-          class="text-center"
-        >
-          <!-- Replace this with your icon component -->
-          <component :is="label" :size="32" />
-        </div>
+        <template v-for="(label, idx) in form.icons" :key="'icon-' + idx">
+          <div :style="{ color: resolveColor(form.iconsColor) }" class="text-center">
+            <!-- Icon logic goes here -->
+            <component :is="label" :size="32" />
+          </div>
+        </template>
       </div>
     </header>
 
-    <!-- MOBILE NAV -->
     <header
       :style="{ backgroundColor: resolveColor(form.headerBg) }"
       class="rounded-t-2xl md:hidden flex flex-col justify-center px-3 py-1"
@@ -381,110 +396,92 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
             v-if="form.logo"
             :src="form.logoPreview"
             :style="{ width: form.logoSize + 'px', height: form.logoSize + 'px' }"
+            :alt="'Logo'"
             :class="form.logoStyle === 'rounded' ? 'rounded-full' : 'rounded-0'"
-            alt="Logo"
           />
-          <h1
-            :style="{ color: resolveColor(form.titleColor) }"
-            class="font-semibold leading-tight text-3xl"
-          >
+          <h1 :style="{ color: resolveColor(form.titleColor) }" class="font-semibold leading-tight text-3xl">
             {{ form.title }}
           </h1>
         </router-link>
-        <button
-          class="md:hidden"
-          :style="{ color: resolveColor(form.navbarColor) }"
-          @click="isOpen = !isOpen"
-        >
+        <button class="md:hidden" :style="{ color: resolveColor(form.navbarColor) }">
           <component :is="isOpen ? 'X' : 'Menu'" :size="28" />
         </button>
       </div>
 
-      <ul v-if="isOpen" class="gap-5 text-center flex flex-col items-center">
-        <hr />
-        <router-link
-          v-for="(link, index) in form.navbar"
-          :key="index"
-          :to="link"
-          :style="{ color: resolveColor(form.navbarColor) }"
-        >
-          {{ link }}
-        </router-link>
-        <hr />
-        <div class="flex flex-col justify-center items-center gap-3 mb-2">
-          <button
-            :style="{
-              backgroundColor: resolveColor(form.buttonBgColors[0]),
-              color: resolveColor(form.buttonColors[0])
-            }"
-            class="md:px-6 md:py-3 p-2 rounded font-medium"
+      <template v-if="isOpen">
+        <ul class="gap-5 text-center flex flex-col items-center">
+          <hr />
+          <router-link
+            v-for="link in form.navbar"
+            :key="link"
+            :to="link"
+            :style="{ color: resolveColor(form.navbarColor) }"
           >
-            {{ form.buttons[0] }}
-          </button>
-          <button
-            :style="{
-              backgroundColor: resolveColor(form.buttonBgColors[1]),
-              color: resolveColor(form.buttonColors[1])
-            }"
-            class="md:px-6 md:py-3 p-2 rounded font-medium"
-          >
-            {{ form.buttons[1] }}
-          </button>
-        </div>
-      </ul>
+            {{ link }}
+          </router-link>
+          <hr />
+          <div class="flex flex-col justify-center items-center gap-3 mb-2">
+            <button
+              v-for="(button, index) in form.buttons"
+              :key="index"
+              :style="{ backgroundColor: resolveColor(form.buttonBgColors[index]), color: resolveColor(form.buttonColors[index]) }"
+              class="md:px-6 md:py-3 p-2 rounded font-medium"
+            >
+              {{ button }}
+            </button>
+          </div>
+        </ul>
+      </template>
     </header>
 
     <div class="flex justify-center max-w-5xl mx-auto break-words">
-      <section
-        :class="form.layout === 'left' ? 'w-[65%]' : 'w-full justify-center items-center text-center'"
-        class="relative"
-      >
+      <section :class="form.layout === 'left' ? 'w-[65%]' : 'w-full justify-center items-center text-center'" class="relative">
         <div :class="form.layout === 'left' ? '' : 'mx-auto'" class="mb-3">
-          <h1
-            :style="{ color: resolveColor(form.heroTextColor) }"
-            class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
-          >
+          <h1 :style="{ color: resolveColor(form.heroTextColor) }" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
             {{ form.heroText }}
           </h1>
-          <p
-            :style="{ color: resolveColor(form.heroTextColor) }"
-            class="text-base sm:text-lg lg:text-xl opacity-80 mb-10 max-w-xl mx-auto"
-          >
+          <p :style="{ color: resolveColor(form.heroTextColor) }" class="text-base sm:text-lg lg:text-xl opacity-80 mb-10 max-w-xl mx-auto">
             {{ form.heroDescription }}
           </p>
           <div class="flex flex-row justify-center items-center gap-3">
             <button
-              :style="{
-                backgroundColor: resolveColor(form.buttonBgColors[0]),
-                color: resolveColor(form.buttonColors[0])
-              }"
+              v-for="(button, index) in form.buttons"
+              :key="index"
+              :style="{ backgroundColor: resolveColor(form.buttonBgColors[index]), color: resolveColor(form.buttonColors[index]) }"
               class="md:px-6 md:py-3 p-2 rounded font-medium"
             >
-              {{ form.buttons[0] }}
-            </button>
-            <button
-              :style="{
-                backgroundColor: resolveColor(form.buttonBgColors[1]),
-                color: resolveColor(form.buttonColors[1])
-              }"
-              class="md:px-6 md:py-3 p-2 rounded font-medium"
-            >
-              {{ form.buttons[1] }}
+              {{ button }}
             </button>
           </div>
         </div>
       </section>
 
-      <div
-        v-if="form.layout === 'left' && form.heroImage"
-        class="md:w-35% w-full"
-      >
-        <img :src="form.heroImagePreview" />
-      </div>
+      <template v-if="form.layout === 'left' && form.heroImage">
+        <div class="md:w-35% w-full">
+          <img :src="form.heroImagePreview" />
+        </div>
+      </template>
     </div>
   </main>
 </template>
-`.trim()
+
+<script>
+export default {
+  props: {
+    form: Object,
+    isOpen: Boolean,
+  },
+  methods: {
+    resolveColor(color) {
+      // Your color resolution logic here
+    },
+  },
+};
+</script>
+
+<style>
+/* Add your styles here */
+</style>`.trim()
     },
     {language: "Sveltejs",
         name: "Sveltejs",
@@ -670,36 +667,7 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
  
       <div className="relative z-[1001] bg-dark rounded-xl w-[90%] max-w-[1000px] h-[400px] flex shadow-lg border-2 border-secondary">
         <aside className={clsx('overflow-auto md:block hidden w-64 border-r rounded-l-xl border-secondary p-3', darkMode ? 'bg-muted text-dark' : 'bg-dark text-muted')}>
-          <div className="flex items-center justify-between mb-5">
-            <Logo />
-            <lucid.X size={24} className="cursor-pointer" onClick={onClick} />
-          </div>
-
-          <div className="space-y-4">
-            {languages.map((language, index) => (
-              <>
-                <div key={index} onClick={() => setLang(index)} className={`gap-x-5 flex items-center cursor-pointer border-2  ${darkMode && lang === index ? "text-muted bg-dark" : !darkMode && lang === index ? "text-dark bg-muted" : darkMode ? " border-dark bg-muted text-dark hover:text-muted hover:bg-dark" : !darkMode ? "border-muted bg-dark text-muted hover:text-dark hover:bg-muted" : ""}  p-2  rounded-xl`}>
-                      <img src={language.src} alt={`${language.language}-logo`} className='size-5'/>
-                      <h2>{language.language}</h2>
-                </div>
-              </>
-            ))}
-          </div>
-
-        <div className={`space-y-3 mt-3 ${!darkMode ? '*:text-muted' : '*:text-dark'}`}>
-          <div className='text-md'>
-              {!showLinks && <h2 className='text-lg underline cursor-pointer' onClick={StackNotFound}>Can't find your stack?</h2>}
-              {showLinks && <> 
-              <h2 className='text-lg'>Jsx code copied</h2>
-              <h2 className='text-lg'>Try one of these:</h2>
-              <a href="https://codingfleet.com/code-converter" target="_blank" className='underline hover:text-secondary'>Coding fleet</a> <br />
-              <a href="https://syntha.ai/converters" target="_blank" className='underline hover:text-secondary'>Syntha.ai</a> <br />
-              <a href="https://www.gitloop.com/tool/react-to-vue?form=MG0AV3" target="_blank" className='underline hover:text-secondary'>Gitloop</a></>}
-          </div>
-              <hr className={`${!darkMode ? '*:text-muted' : '*:text-dark'} m-3`} />
-              <h3>© Heroship {new Date().getFullYear()}</h3>
-              <p>Developed by <a className=' underline hover:text-secondary' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
-        </div>
+          <Aside />
         </aside>
 
         <main className={clsx('flex-1 p-5  overflow-auto md:rounded-r-xl rounded-xl', darkMode ? 'bg-dark text-muted' : 'bg-muted text-dark')}>
@@ -733,37 +701,7 @@ const Export = ({ onClick, form, colors, labelStyle }) => {
                 darkMode ? 'bg-muted text-dark' : 'bg-dark text-muted'
               )}
             >
-              <div className="flex justify-between items-center mb-5">
-                <Logo />
-                <lucid.X size={24} className="cursor-pointer" onClick={() => setSidebarOpen(false)} />
-              </div>
-
-              <div className="space-y-4">
-                {languages.map((language, index) => (
-                  <>
-                    <div key={index} onClick={() => setLang(index)} className={`gap-x-5 flex items-center cursor-pointer border-2  ${darkMode && lang === index ? "text-muted bg-dark" : !darkMode && lang === index ? "text-dark bg-muted" : darkMode ? " border-dark bg-muted text-dark hover:text-muted hover:bg-dark" : !darkMode ? "border-muted bg-dark text-muted hover:text-dark hover:bg-muted" : ""}  p-2  rounded-xl`}>
-                          <img src={language.src} alt={`${language.language}-logo`} className='size-5'/>
-                          <h2>{language.language}</h2>
-                    </div>
-                  </>
-                ))}
-              </div>
-
-              <div className={`space-y-3 mt-3 ${!darkMode ? '*:text-muted' : '*:text-dark'}`}>
-                <div className='text-md'>
-                    {!showLinks && <h2 className='text-lg underline cursor-pointer' onClick={StackNotFound}>Can't find your stack?</h2>}
-                    {showLinks && <> 
-                    <h2 className='text-lg'>Jsx code copied</h2>
-                    <h2 className='text-lg'>Try one of these:</h2>
-                    <a href="https://codingfleet.com/code-converter" target="_blank" className='underline hover:text-secondary'>Coding fleet</a> <br />
-                    <a href="https://syntha.ai/converters" target="_blank" className='underline hover:text-secondary'>Syntha.ai</a> <br />
-                    <a href="https://www.gitloop.com/tool/react-to-vue?form=MG0AV3" target="_blank" className='underline hover:text-secondary'>Gitloop</a></>}
-                </div>
-                    <hr className={`${!darkMode ? '*:text-muted' : '*:text-dark'} m-3`} />
-                    <h3>© Heroship {new Date().getFullYear()}</h3>
-                    <p>Developed by <a className=' underline hover:text-secondary' href="https://devseiko.vercel.app" target="_blank" rel="noopener">MECHSEIKO</a></p>
-              </div>
-                
+              <Aside />
             </aside>
           </>
         )}

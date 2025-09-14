@@ -502,7 +502,7 @@ const Hero = () => {
 
 
 
----
+
 {/* PREVIEW */}
             {showExport && <Export form={form} colors={colors} onClick={() => setShowExport(false)} labelStyle={labelStyle}/>}
             {alert && <Alert message={"Start Editing😉"} closeAlertBox={closeAlert}/>}

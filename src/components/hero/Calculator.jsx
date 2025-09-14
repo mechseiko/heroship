@@ -85,9 +85,9 @@ const Calculator = () => {
                   onChange={(e) => setSelectedRole(e.target.value)}
                   className="text-primary outline-none lg:text-lg text-md"
                 >
-                  {Object.entries(roles).map(([key, { label }]) => (
+                  {Object.entries(roles).map(([key, { label }], index) => (
                     <>
-                    <option key={key} value={key}>{label}</option>
+                    <option key={index} value={key}>{label}</option>
                     </>
                     
                   ))}
