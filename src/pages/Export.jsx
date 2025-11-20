@@ -692,7 +692,7 @@ export default {
           <>
             {/* Overlay inside Modal */}
             <div
-              className="md:hidden oveflow-auto absolute inset-0 bg-opacity-30 z-20"
+              className="md:hidden overflow-auto absolute inset-0 bg-opacity-30 z-20"
               onClick={() => setSidebarOpen(false)}
             />
             <aside
